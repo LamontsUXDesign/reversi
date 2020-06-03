@@ -83,7 +83,7 @@ socket.on('join_room_response', function (payload) {
     }
 
     /* Manage the message that a new player has joined */
-    var newHTML = '<div class="text-success"><p><i>' + payload.username + ' just entered the lobby</p></i></div>';
+    var newHTML = '<br><div class="text-success"><p><i>' + payload.username + ' just entered the lobby</p></i></div>';
     var newNode = $(newHTML);
     newNode.hide();
     $('#messages').append(newNode);
@@ -325,7 +325,7 @@ socket.on('game_update', function (payload) {
     }
 
     $('#my_color').html('<h3 id="my_color">I am ' + my_color + '</h3>');
-    $('#my_color').append('<h4>It is '+payload.game.whose_turn+'\'s turn.<br>Elapsed time <span id ="elapsed"></span></h4>');
+    $('#my_color').append('<h4>It is '+payload.game.whose_turn+'\'s turn. <br> Elapsed time <span id ="elapsed"></span></h4>');
 
     clearInterval(interval_timer);
     interval_timer = setInterval(function(last_time){
