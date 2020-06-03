@@ -112,7 +112,7 @@ socket.on('player_disconnected', function (payload) {
     }
 
     /* Manage the message that a new player has left */
-    var newHTML = '<div class="text-danger"><p><i>' + payload.username + ' has left the lobby</i></p></div>';
+    var newHTML = '<br><div class="text-danger"><p><i>' + payload.username + ' has left the lobby</i></p></div>';
     var newNode = $(newHTML);
     newNode.hide();
     $('#messages').append(newNode);
@@ -324,8 +324,15 @@ socket.on('game_update', function (payload) {
     return;
     }
 
-    $('#my_color').html('<h3 id="my_color">I am ' + my_color + '</h3>');
-    $('#my_color').append('<h4>It is '+payload.game.whose_turn+'\'s turn. <br> Elapsed time <span id ="elapsed"></span></h4>');
+    if (my_color === payload.game.whose_turn){
+        $('#my_color').html('<h3 id="my_color">You are ' + my_color + '<br><div class="text-success">Make a move!</div></h3>');
+    }
+    else{
+        $('#my_color').html('<h3 id="my_color">You are ' + my_color + '<br> Wait for '+payload.game.whose_turn+' to make a move.</h3>');
+    }
+
+    /*$('#my_color').html('<h3 id="my_color">I am ' + my_color + '</h3>');*/
+    $('#my_color').append('<h4>Elapsed time <div class="text-success"><span id ="elapsed"></span></div></h4>');
 
     clearInterval(interval_timer);
     interval_timer = setInterval(function(last_time){
