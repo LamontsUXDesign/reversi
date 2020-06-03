@@ -49,21 +49,21 @@ socket.on('join_room_response', function (payload) {
     var dom_elements = $('.socket_' + payload.socket_id);
     /* If we don't already have an entry for this person */
     if (dom_elements.length == 0) {
-        var nodeA = $('<div></div>');
+        var nodeA = $('<div></div><br>');
         nodeA.addClass('socket_' + payload.socket_id);
 
-        var nodeB = $('<div></div>');
+        var nodeB = $('<div></div><br>');
         nodeB.addClass('socket_' + payload.socket_id);
 
-        var nodeC = $('<div></div>');
+        var nodeC = $('<div></div><br>');
         nodeC.addClass('socket_' + payload.socket_id);
 
         nodeA.addClass('w-100');
 
-        nodeB.addClass('col-9 text-right');
-        nodeB.append('<h4>' + payload.username + '</h4>');
+        nodeB.addClass('col-6 float-left');
+        nodeB.append('<h3>' + payload.username + '</h3>');
 
-        nodeC.addClass('col-3 text-left');
+        nodeC.addClass('col-4 float-right');
         var buttonC = makeInviteButton(payload.socket_id);
         nodeC.append(buttonC);
 
@@ -83,7 +83,7 @@ socket.on('join_room_response', function (payload) {
     }
 
     /* Manage the message that a new player has joined */
-    var newHTML = '<p>' + payload.username + ' just entered the lobby</p>';
+    var newHTML = '<div class="text-success"><p><i>' + payload.username + ' just entered the lobby</p></i></div>';
     var newNode = $(newHTML);
     newNode.hide();
     $('#messages').append(newNode);
@@ -112,7 +112,7 @@ socket.on('player_disconnected', function (payload) {
     }
 
     /* Manage the message that a new player has left */
-    var newHTML = '<p>' + payload.username + ' has left the lobby</p>';
+    var newHTML = '<div class="text-danger"><p><i>' + payload.username + ' has left the lobby</i></p></div>';
     var newNode = $(newHTML);
     newNode.hide();
     $('#messages').append(newNode);
@@ -221,7 +221,7 @@ socket.on('send_message_response', function (payload) {
         alert(payload.message);
         return;
     }
-    var newHTML = '<p><b>' + payload.username + ' says: </b>' + payload.message + '</p>';
+    var newHTML = '<p><b>' + payload.username + ': </b>' + payload.message + '</p>';
     var newNode = $(newHTML);
     newNode.hide();
     $('#messages').append(newNode);
@@ -325,7 +325,7 @@ socket.on('game_update', function (payload) {
     }
 
     $('#my_color').html('<h3 id="my_color">I am ' + my_color + '</h3>');
-    $('#my_color').append('<h4>It is '+payload.game.whose_turn+'\'s turn. Elapsed time <span id ="elapsed"></span></h4>');
+    $('#my_color').append('<h4>It is '+payload.game.whose_turn+'\'s turn.<br>Elapsed time <span id ="elapsed"></span></h4>');
 
     clearInterval(interval_timer);
     interval_timer = setInterval(function(last_time){
@@ -439,6 +439,6 @@ socket.on('game_over', function (payload) {
     }
     /* Jump to a new page */
 
-    $('#game_over').html('<h1>Game Over</h1></h2>'+payload.who_won+' won!</h2>');
-    $('#game_over').append('<a href="lobby.html?username='+username+'" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Return to the lobby</a>');
+    $('#game_over').html('<h1>Game Over</h1><br><h2>'+payload.who_won+' won!</h2><br>');
+    $('#game_over').append('<br><a href="lobby.html?username='+username+'" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Return to the lobby</a><br>');
 });

@@ -2,6 +2,7 @@ body {
     background-image: url('../images/background.png');
 }
 
+
 table#game_board{
     margin: auto;
     border-style: solid;
